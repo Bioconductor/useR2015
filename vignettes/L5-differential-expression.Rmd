@@ -1,0 +1,25 @@
+---
+title: "Lab: Differential Expression Workflow"
+output:
+  BiocStyle::html_document:
+    toc: true
+vignette: >
+  % \VignetteIndexEntry{5: Lab: Differential Expression Workflow}
+  % \VignetteEngine{knitr::rmarkdown}
+---
+
+```{r style, echo = FALSE, results = 'asis'}
+BiocStyle::markdown()
+```
+
+```{r setup, echo=FALSE, warning=FALSE}
+options(max.print=1000, width=100)
+knitr::opts_chunk$set(cache=TRUE)
+```
+
+Authors: Martin Morgan (<a
+  href="mailto:mtmorgan@fhcrc.org">mtmorgan@fhcrc.org</a>), Sonali
+  Arora (<a
+  href="mailto:sarora@fredhutch.org">sarora@fredhutch.org</a>)<br />
+Date: 30 June, 2015<br />
+Back: [Introduction](L0-intro.html)

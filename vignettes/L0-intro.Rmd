@@ -1,0 +1,50 @@
+---
+title: "Overview"
+output:
+  BiocStyle::html_document:
+    toc: true
+vignette: >
+  % \VignetteIndexEntry{0: Overview}
+  % \VignetteEngine{knitr::rmarkdown}
+---
+
+```{r style, echo = FALSE, results = 'asis'}
+BiocStyle::markdown()
+```
+
+```{r setup, echo=FALSE}
+knitr::opts_chunk$set(cache=TRUE)
+```
+
+Authors: Martin Morgan (<a
+  href="mailto:mtmorgan@fhcrc.org">mtmorgan@fhcrc.org</a>), Sonali
+  Arora (<a
+  href="mailto:sarora@fredhutch.org">sarora@fredhutch.org</a>)<br />
+Date: 30 June, 2015
+
+We start with an introductory presentation, and continue to a hands-on
+practical.  The practical has three parts. Each part consists of
+informative material followed by short or intermediate length
+exercises and case studies. The material introduces or refreshes your
+knowledge of _R_, and walks through some of the central classes and
+annotation resources for working with high-throughput sequence data in
+_Bioconductor_.
+
+It's recommended that you choose two of the following sections, and
+spend about 45 minutes on each. Take time to work through the code in
+the material as well as the exercises, asking questions of your
+colleagues and the TAs as needed. If you're relatively new to _R_,
+then consider doing the first two sections. If you're new to
+_Bioconductor_, then the second and either the third or fourth section
+is recommended.
+
+1. Presentation:
+   [_R_ / _Bioconductor_ for Sequence Analysis](L1-rbioc-for-sequencing.pdf)
+
+2. Lab: [Introduction to _Bioconductor_](L2-bioc-intro.html)
+
+3. Lab: [Data Representations](L3-data-representation.html)
+
+4. Lab: [Annotation](L4-annotation.html)
+
+5. Lab: [Differential Expression](L5-differential-expression.html)

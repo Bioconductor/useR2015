@@ -1,5 +1,5 @@
 % \VignetteEngine{knitr::knitr}
-% \VignetteIndexEntry{01. R / Bioconductor Introduction}
+% \VignetteIndexEntry{1: R / Bioconductor Introduction}
 
 \documentclass{beamer}
 \usepackage{BioconductorSlides}
