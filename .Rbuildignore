@@ -1,0 +1,4 @@
+vignettes/.*_cache
+vignettes/.*_files
+vignettes/figure
+vignettes/AMakefile

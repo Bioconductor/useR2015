@@ -9,6 +9,9 @@ Authors@R: c(
     person("Sonali", "Arora", role="ctb",
         email="sarora@fredhutch.org"))
 Description: Vignettes and data to support a tutorial at useR! 2015.
+Suggests: BiocStyle, knitr, AnnotationHub,
+    BSgenome.Hsapiens.UCSC.hg19, Biostrings, GenomicRanges, Gviz,
+    TxDb.Hsapiens.UCSC.hg19.knownGene, biomaRt, ggplot2, org.Hs.eg.db,
+    rtracklayer
 License: Artistic-2.0
 VignetteBuilder: knitr
-       
