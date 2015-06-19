@@ -1,0 +1,20 @@
+SOURCES = $(shell ls *Rmd)
+LTXSOURCES = $(shell ls *Rnw)
+
+%.pdf: %.tex
+	@echo "texi2dvi --pdf $<"; "$(R_HOME)"/bin/R CMD texi2dvi --pdf $<
+
+%.tex: %.Rnw
+	@echo "Sweave $<"; "$(R_HOME)"/bin/R CMD Sweave $<
+
+%.html: %.Rmd
+	@echo "Sweave $<"; "$(R_HOME)"/bin/R CMD Sweave $<
+
+%.R: %.Rmd
+	@echo "Stangle $<"
+	KNITR_CACHE=FALSE && "$(R_HOME)"/bin/R CMD Stangle $<
+
+all: $(SOURCES:.Rmd=.html) $(LTXSOURCES:.Rnw=.pdf)
+
+clean:
+	rm -rf *html *R *.md cache/ figure/

@@ -1,0 +1,14 @@
+Package: useR2015
+Type: Package
+Title: R / Bioconductor for analysis and comprehension of
+    high-throughput genomic data
+Version: 0.0.1
+Authors@R: c(
+    person("Martin", "Morgan", role="cre",
+        email="mtmorgan@fredhutch.org"),
+    person("Sonali", "Arora", role="ctb",
+        email="sarora@fredhutch.org"))
+Description: Vignettes and data to support a tutorial at useR! 2015.
+License: Artistic-2.0
+VignetteBuilder: knitr
+       

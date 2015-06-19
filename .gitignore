@@ -1,0 +1,14 @@
+vignettes/*.aux
+vignettes/*.log
+vignettes/*.nav
+vignettes/*.out
+vignettes/*.pdf
+vignettes/*.snm
+vignettes/*.toc
+vignettes/*.vrb
+vignettes/*.R
+vignettes/*_cache
+vignettes/*figure
+vignettes/*_files
+vignettes/*html
+vignettes/*tex
