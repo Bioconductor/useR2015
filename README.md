@@ -10,10 +10,10 @@ common work flows and the unique statistical challenges associated
 with 'RNAseq', variant annotation, and other experiments. The emphasis
 is on exploratory analysis, and the analysis of designed
 experiments. The workshop emphasizes orientation within the
-_Bioconductor_ milieu; we will touch on the [Biostrings][],
-[ShortRead][], [GenomicRanges][], [DESeq2][], and
-[VariantAnnotation][], and other packages, with short exercises to
-illustrate the functionality of each package.
+_Bioconductor_ milieu; we will touch on the [AnnotationHub][],
+[Biostrings][], [GenomicRanges][], [GenomicAlignments][], [DESeq2][],
+and other packages, with short exercises to illustrate the
+functionality of each package.
 
 ## Goals
 
@@ -47,14 +47,23 @@ basic understanding of biological and technological aspects of
 high-throughput sequence analysis. Participants should come prepared
 with a modern wireless-enabled laptop and web browser installed.
 
+Install necessary software with the following commands
+
+    source("http://bioconductor.org/biocLite.R")
+    biocLite(c("shiny", "airway", "AnnotationHub", "Biostrings",
+        "DESeq2", "GenomicAlignments", " GenomicFiles", "GenomicRanges",
+        "Rsamtools", "TxDb.Hsapiens.UCSC.hg19.knownGene", "org.Hs.eg.db",
+        "Homo.sapiens", "RNAseqData.HNRNPC.bam.chr14"))
+    biocLite("Bioconductor/useR2015")
+
 ## Intended Audience
 
 This workshop is for professional bioinformaticians and statisticians
 intending to use _R_ / _Bioconductor_ for analysis and comprehension
 of high-throughput sequence data.
 
+[AnnotationHub]: http://bioconductor.org/packages/AnnotationHub
 [Biostrings]: http://bioconductor.org/packages/Biostrings
-[ShortRead]: http://bioconductor.org/packages/ShortRead
+[GenomicAlignments]: http://bioconductor.org/packages/GenomicAlignments
 [GenomicRanges]: http://bioconductor.org/packages/GenomicRanges
 [DESeq2]: http://bioconductor.org/packages/DESeq2
-[VariantAnnotation]: http://bioconductor.org/packages/VariantAnnotation

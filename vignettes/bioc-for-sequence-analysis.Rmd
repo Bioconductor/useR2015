@@ -19,17 +19,19 @@ knitr::opts_chunk$set(
 
 ```{r setup, echo=FALSE, messages=FALSE, warnings=FALSE}
 suppressPackageStartupMessages({
-    library(shiny)
-    library(GenomicRanges)
-    library(TxDb.Hsapiens.UCSC.hg19.knownGene)
-    library(org.Hs.eg.db)
-    library(Homo.sapiens)
     library(AnnotationHub)
-    library(RNAseqData.HNRNPC.bam.chr14)
-    library(GenomicAlignments)
-    library(Rsamtools)
-    library(airway)
+    library(Biostrings)
     library(DESeq2)
+    library(GenomicAlignments)
+    library(GenomicFiles)
+    library(GenomicRanges)
+    library(Homo.sapiens)
+    library(RNAseqData.HNRNPC.bam.chr14)
+    library(Rsamtools)
+    library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+    library(airway)
+    library(org.Hs.eg.db)
+    library(shiny)
 })
 ```
 
@@ -708,7 +710,7 @@ Seattle, WA, 20-22 July.
   high-throughput genomic analysis with
   <em>Bioconductor</em></a>. Nature Methods 12:115-121;
   doi:10.1038/nmeth.3252 (full-text free with registration).
-- Lawrence M, Huber W, Pagès H, Aboyoun P, Carlson M, et al. (2013) <a
+- Lawrence M, Huber W, Pag&egraves;s H, Aboyoun P, Carlson M, et al. (2013) <a
   href="http://dx.doi.org/10.1371/journal.pcbi.1003118">Software for
   Computing and Annotating Genomic Ranges</a>. PLoS Comput Biol 9(8):
   e1003118. doi: 10.1371/journal.pcbi.1003118
