@@ -12,7 +12,9 @@ vignette: >
 ```{r style, echo = FALSE, results = 'asis'}
 BiocStyle::markdown()
 options(width=100, max.print=1000)
-knitr::opts_chunk$set(cache=as.logical(Sys.getenv("KNITR_CACHE", "TRUE")))
+knitr::opts_chunk$set(
+    eval=as.logical(Sys.getenv("KNITR_EVAL", "FALSE")),
+    cache=as.logical(Sys.getenv("KNITR_CACHE", "TRUE")))
 ```
 
 ```{r setup, echo=FALSE, messages=FALSE, warnings=FALSE}
@@ -84,7 +86,7 @@ Statistical analysis of differential expression
 
 ### Gene model annotation resources -- `TxDb` packages
 
-`r Biocpkg("TxDb.Hsapiens.UCSC.hg19.knownGene")`
+[TxDb.Hsapiens.UCSC.hg19.knownGene][]
 
 ```{r gene-model-discovery}
 library("TxDb.Hsapiens.UCSC.hg19.knownGene")
@@ -162,9 +164,9 @@ Many biologically interesting questions represent operations on ranges
 - Count overlaps between aligned reads and known genes --
   `GenomicRanges::summarizeOverlaps()`
 - Genes nearest to regulatory regions -- `GenomicRanges::nearest()`,
-  `r Biocpkg("ChIPseeker")`
+  [ChIPseeker][]
 - Called variants relevant to clinical phenotypes -- 
-  `r Biocpkg("VariantFiltering")`
+  [VariantFiltering][]
 
 ![Alt Ranges Algebra](our_figures/RangeOperations.png)
 
@@ -178,8 +180,8 @@ org.Hs.eg.db
 `OrgDb` objects
 
 - Curated resources, underlying sqlite data base, like `TxDb`
-- make your own: `r Biocpkg("AnnotationForge")` (but see the
-  AnnotationHub, below!)
+- make your own: [AnnotationForge][] (but see the AnnotationHub,
+  below!)
 - 'select' interface: `keytypes()`, `columns()`, `keys()`, `select()`,
   `mapIds()`
 
@@ -211,7 +213,7 @@ Related functionality
 
 ### _biomaRt_ & friends
 
-http://biomart.org; _Bioconductor_ package `r Biocpkg("biomaRt")`
+http://biomart.org; _Bioconductor_ package [biomaRt][]
 
 ```{r biomart, eval=FALSE}
 ## NEEDS INTERNET ACCESS !!
@@ -247,7 +249,7 @@ Other internet resources
 
 ### _AnnotationHub_
 
-- _Bioconductor_ package `r Biocpkg("AnnotationHub")`
+- _Bioconductor_ package [AnnotationHub][]
 - Meant to ease use of 'consortium' and other genome-scale resources
 - Simplify discovery, retrieval, local management, and import to
   standard _Bioconductor_ representations
@@ -345,7 +347,7 @@ BAM files of aligned reads
 
 - Typically, sorted (by position) and indexed ('.bai' files)
 
-`r Biocpkg("GenomicAlignments")`
+[GenomicAlignments][]
 
 - Use an example BAM file (`fl` could be the path to your own BAM file)
 
@@ -453,14 +455,14 @@ Iterative programming model
     - Count reads overlapping regions of interest:
       `GenomicAlignments::summarizeOverlaps()`
 6. **Statistical analysis**
-    - `r Biocpkg("DESeq2")`, `r Biocpkg("edgeR")`
+    - [DESeq2][], [edgeR][]
 7. Comprehension
 
 More extensive material
 
-- `r Biocpkg("edgeR")` and `r Biocpkg("limma")` vignettes.
-- `r Biocpkg("DESeq2")` vignette.
-- `r Biocexptpkg("airway")` vignette for alignment and summary stages.
+- [edgeR][] and [limma][] vignettes.
+- [DESeq2][] vignette.
+- [airway][] vignette for alignment and summary stages.
 - [RNA-Seq workflow](http://bioconductor.org/help/workflows/rnaseqGene/)
   providing a more extended analysis of the airway data set.
 
@@ -528,6 +530,8 @@ Three types of information
 
 - Coordinated management of three data resources
 - Easy integration with other _Bioconductor_ software
+
+![](our_figures/SE_Description.png)
 
 ```{r airway}
 library("airway")
@@ -717,3 +721,14 @@ sessionInfo()
 
 [AnnotationHub]: http://bioconductor.org/packages/AnnotationHub
 [kallisto]: http://pachterlab.github.io/kallisto/
+[TxDb.Hsapiens.UCSC.hg19.knownGene]: http://bioconductor.org/packages/TxDb.Hsapiens.UCSC.hg19.knownGene
+[ChIPseeker]: http://bioconductor.org/packages/ChIPseeker
+[VariantFiltering]: http://bioconductor.org/packages/VariantFiltering
+[AnnotationForge]: http://bioconductor.org/packages/AnnotationForge
+[biomaRt]: http://bioconductor.org/packages/biomaRt
+[AnnotationHub]: http://bioconductor.org/packages/AnnotationHub
+[GenomicAlignments]: http://bioconductor.org/packages/GenomicAlignments
+[DESeq2]: http://bioconductor.org/packages/DESeq2
+[edgeR]: http://bioconductor.org/packages/edgeR
+[limma]: http://bioconductor.org/packages/limma
+[airway]: http://bioconductor.org/packages/airway
