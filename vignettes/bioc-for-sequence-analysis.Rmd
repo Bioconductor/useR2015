@@ -24,6 +24,7 @@ suppressPackageStartupMessages({
     library(DESeq2)
     library(GenomicAlignments)
     library(GenomicFiles)
+    library(BiocParallel)
     library(GenomicRanges)
     library(Homo.sapiens)
     library(RNAseqData.HNRNPC.bam.chr14)
@@ -31,6 +32,7 @@ suppressPackageStartupMessages({
     library(TxDb.Hsapiens.UCSC.hg19.knownGene)
     library(airway)
     library(org.Hs.eg.db)
+    library(ggplot2)
     library(shiny)
 })
 ```
@@ -446,6 +448,29 @@ Iterative programming model
          xlab="GC Content per Aligned Read", ylab="Number of Reads")
     ```
 
+### Parallel evaluation
+
+- Cores, computers, clusters, clouds
+- Generally, requires memory management techniques like restriction or
+  iteration -- parallel processes competing for shared memory
+- Many problems are _embarassingly parallel_ -- `lapply()`-like --
+  especially in bioinformatics where parallel evaluation is across
+  files
+
+- Example: GC content in several BAM files
+
+    ```{r parallel-doit}
+    library(BiocParallel)
+    gc <- bplapply(BamFileList(fls), reduceByYield, yield, map, reduce)
+
+    library(ggplot2)
+    df <- stack(as.data.frame(lapply(gc, cumsum)))
+    df$GC <- 0:72
+    ggplot(df, aes(x=GC, y=values)) + geom_line(aes(colour=ind)) +
+        xlab("Number of GC Nucleotides per Read") +
+        ylab("Number of Reads")
+    ```
+
 # Statistical analysis of differential expression -- `DESeq2`
 
 1. Experimental design
@@ -728,7 +753,6 @@ sessionInfo()
 [VariantFiltering]: http://bioconductor.org/packages/VariantFiltering
 [AnnotationForge]: http://bioconductor.org/packages/AnnotationForge
 [biomaRt]: http://bioconductor.org/packages/biomaRt
-[AnnotationHub]: http://bioconductor.org/packages/AnnotationHub
 [GenomicAlignments]: http://bioconductor.org/packages/GenomicAlignments
 [DESeq2]: http://bioconductor.org/packages/DESeq2
 [edgeR]: http://bioconductor.org/packages/edgeR

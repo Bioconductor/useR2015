@@ -9,9 +9,9 @@ Authors@R: c(
     person("Sonali", "Arora", role="ctb",
         email="sarora@fredhutch.org"))
 Description: Vignettes and data to support a tutorial at useR! 2015.
-Suggests: BiocStyle, knitr, shiny, airway, AnnotationHub, Biostrings,
-    DESeq2, GenomicAlignments, GenomicFiles, GenomicRanges, Rsamtools,
-    TxDb.Hsapiens.UCSC.hg19.knownGene, org.Hs.eg.db, Homo.sapiens,
-    RNAseqData.HNRNPC.bam.chr14
+Suggests: BiocStyle, knitr, ggplot2, shiny, airway, AnnotationHub,
+    Biostrings, BiocParallel, DESeq2, GenomicAlignments, GenomicFiles,
+    GenomicRanges, Rsamtools, TxDb.Hsapiens.UCSC.hg19.knownGene,
+    org.Hs.eg.db, Homo.sapiens, RNAseqData.HNRNPC.bam.chr14
 License: Artistic-2.0
 VignetteBuilder: knitr
