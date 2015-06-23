@@ -25,5 +25,7 @@ shinyUI(fluidPage(
             selectInput("bam", "BAM File", bamchoices, multiple=TRUE)),
 
         ## Show a plot of the generated distribution
-        mainPanel(plotOutput("tracksPlot")))
-    ))
+        mainPanel(
+            plotOutput("tracksPlot"),
+            plotOutput("countsPlot"))
+    )))

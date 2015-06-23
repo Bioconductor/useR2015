@@ -3,6 +3,7 @@ library(shiny)
 library(RNAseqData.HNRNPC.bam.chr14)
 library(Homo.sapiens)
 library(Gviz)
+library(lattice)
 
 ## where are the BAM files?
 dirname <- unique(dirname(RNAseqData.HNRNPC.bam.chr14_BAMFILES))
@@ -15,6 +16,8 @@ ranges$SYMBOL <- unlist(ranges$SYMBOL)
 genes <- GeneRegionTrack(TxDb.Hsapiens.UCSC.hg19.knownGene,
                          chromosome="chr14")
 
+counts <- readRDS("countdf.rds")
+
 shinyServer(function(input, output) {
 
     output$tracksPlot <- renderPlot({
@@ -24,8 +27,10 @@ shinyServer(function(input, output) {
             coverage <- Map(DataTrack,
                 range = bam, name = bam,
                 MoreArgs=list(type = 'histogram',
-                    window = -1, genome = 'hg19',
-                    chromosome = 'chr14'))
+                  window = -1, genome = 'hg19',
+                  chromosome = 'chr14',
+                  transformation = function(x) asinh(x),
+                  ylim=c(0, 8)))
         } else {
             coverage <- list()
         }
@@ -37,5 +42,10 @@ shinyServer(function(input, output) {
         plotTracks(c(list(genes), coverage),
                    from = start(range), to=end(range),
                    chr='chr14', windowSize = 30)
+    })
+
+    output$countsPlot <- renderPlot({
+        count <- counts[counts$Symbol == input$symbol,]
+        xyplot(RLogCount ~ Treatment, count, cex=2)
     })
 })
