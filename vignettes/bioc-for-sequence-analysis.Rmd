@@ -710,8 +710,9 @@ Merits of _Bioconductor_ for High-Throughput Sequence Analysis
 
 Acknowledgements
 
-- Core (Seattle): **Sonali Arora**, Marc Carlson, Nate Hayden, Valerie
-  Obenchain, Herv&eacute; Pag&egrave;s, Paul Shannon, Dan Tenenbaum.
+- Core (Seattle): **Sonali Arora**, Marc Carlson, Nate Hayden, Jim
+  Hester, Valerie Obenchain, Herv&eacute; Pag&egrave;s, Paul Shannon,
+  Dan Tenenbaum.
 
 - The research reported in this presentation was supported by the
   National Cancer Institute and the National Human Genome Research
