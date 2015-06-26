@@ -22,10 +22,10 @@ shinyUI(fluidPage(
             selectInput("symbol", "Gene Symbol", symchoices),
 
             ## input path to BAM file
-            selectInput("bam", "BAM File", bamchoices, multiple=TRUE)),
+            selectInput("bam", "BAM File", bamchoices,
+                        selected=bamchoices[1], multiple=TRUE)
+            ),
 
         ## Show a plot of the generated distribution
-        mainPanel(
-            plotOutput("tracksPlot"),
-            plotOutput("countsPlot"))
-    )))
+        mainPanel(plotOutput("tracksPlot")))
+    ))

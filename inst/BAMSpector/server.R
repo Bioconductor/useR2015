@@ -16,8 +16,6 @@ ranges$SYMBOL <- unlist(ranges$SYMBOL)
 genes <- GeneRegionTrack(TxDb.Hsapiens.UCSC.hg19.knownGene,
                          chromosome="chr14")
 
-counts <- readRDS("countdf.rds")
-
 shinyServer(function(input, output) {
 
     output$tracksPlot <- renderPlot({
@@ -44,8 +42,4 @@ shinyServer(function(input, output) {
                    chr='chr14', windowSize = 30)
     })
 
-    output$countsPlot <- renderPlot({
-        count <- counts[counts$Symbol == input$symbol,]
-        xyplot(RLogCount ~ Treatment, count, cex=2)
-    })
 })
