@@ -47,7 +47,9 @@ basic understanding of biological and technological aspects of
 high-throughput sequence analysis. Participants should come prepared
 with a modern wireless-enabled laptop and web browser installed.
 
-Install necessary software with the following commands
+We will use pre-configured Amazon machine instances during the course,
+so no package installation is necessary. For use after the course,
+install necessary software with the following commands
 
     source("http://bioconductor.org/biocLite.R")
     biocLite(c("shiny", "airway", "AnnotationHub", "Biostrings",
