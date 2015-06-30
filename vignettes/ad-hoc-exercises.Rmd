@@ -1,0 +1,177 @@
+---
+title: "_Bioconductor_ for High Throughput Sequence Analysis"
+output:
+  BiocStyle::html_document:
+    toc: true
+    toc_depth: 2
+vignette: >
+  % \VignetteIndexEntry{Bioconductor for High Throughput Sequence Analysis}
+  % \VignetteEngine{knitr::rmarkdown}
+---
+
+```{r style, echo = FALSE, results = 'asis'}
+BiocStyle::markdown()
+options(width=100, max.print=1000)
+knitr::opts_chunk$set(
+    eval=as.logical(Sys.getenv("KNITR_EVAL", "TRUE")),
+    cache=as.logical(Sys.getenv("KNITR_CACHE", "TRUE")))
+```
+
+```{r setup, echo=FALSE, messages=FALSE, warnings=FALSE}
+suppressPackageStartupMessages({
+    require(TxDb.Hsapiens.UCSC.hg19.knownGene)
+    require(BSgenome.Hsapiens.UCSC.hg19)
+    require(org.Hs.eg.db)
+    require(RNAseqData.HNRNPC.bam.chr14)
+    require(GenomicAlignments)
+    require(airway)
+    require(DESeq2)
+})
+```
+
+Authors: Martin Morgan (<a
+  href="mailto:mtmorgan@fredhutch.org">mtmorgan@fredhutch.org</a>), Sonali
+  Arora (<a
+  href="mailto:sarora@fredhutch.org">sarora@fredhutch.org</a>)<br />
+Date: 30 June, 2015<br />
+
+# _Ad hoc_ exercises
+
+## Annotation
+
+Use packages [Txdb.Hsapiens.UCSC.hg19.knownGene][] and
+[BSgenome.Hsapiens.UCSC.hg19][] and the functions `promoters()` and
+`getSeq()` to retrieve the DNA sequences of all promoters. Modify the
+arguments of `promoters()` so that this means the 5000 nucleotides
+upstream of the transcription start site. What challenges are
+introduced by trying to reduce this to one 'promoter' per gene?
+
+```{r promoters-solution}
+require(TxDb.Hsapiens.UCSC.hg19.knownGene)
+require(BSgenome.Hsapiens.UCSC.hg19)
+p <- promoters(TxDb.Hsapiens.UCSC.hg19.knownGene)
+dna <- getSeq(BSgenome.Hsapiens.UCSC.hg19, p)
+dna
+```
+
+## Input & representation of standard file formats
+
+The experiment data package [RNAseqData.HNRNPC.bam.chr14][] contains 8
+BAM files from an experiment involving knockdown of gene HNRNPC. Use
+[org.Hs.eg.db][] and the `mapIds()` function to map from this gene
+symbol to ENTREZ id, and [TxDb.Hsapiens.UCSC.hg19.knownGene][]
+`genes()` function and `vals=` argument to retrieve genomic
+coordinates of this gene. Use [GenomicAlignments][] `readGAlignemntsList()`
+to input the paired-end reads for the HNRNPC gene for one BAM
+file. Write a short function to input and count the number of reads
+overlapping HNRNPC in a single BAM file. Use `sapply()` to summarize
+the number of reads in each BAM file. Can you guess, based on reads
+per region, which 4 samples are control and which are knockdown?
+
+```{r knockdown-solution}
+## HNRNPC --> EntrezID --> exonsBy gene
+require(org.Hs.eg.db)
+require(TxDb.Hsapiens.UCSC.hg19.knownGene)
+egid <- mapIds(org.Hs.eg.db, "HNRNPC", "ENTREZID", "SYMBOL")
+egid
+hnrnpc <- genes(TxDb.Hsapiens.UCSC.hg19.knownGene,vals=list(gene_id=egid))
+hnrnpc
+
+## reads overlapping regions of interest
+require(RNAseqData.HNRNPC.bam.chr14)
+require(GenomicAlignments)
+
+fls <- RNAseqData.HNRNPC.bam.chr14_BAMFILES
+param <- ScanBamParam(which=hnrnpc)
+readGAlignmentsList(fls[1], param=param)
+
+## count
+counter <- function(fl, param)
+    length(readGAlignmentsList(fl, param=param))
+counter(fls[1], param)
+sapply(fls, counter, param)
+```
+
+## Statistical analysis of differential expression -- `DESeq2`
+
+The `summarizeOverlaps()` function is a more sophisticated (compared
+to the simple function of the previous exercise) way to count reads
+overlapping regions of interest. Use it to count reads overlapping the
+HNRNPC region of interest. The return value is a
+`SummarizedExperiment` class, which coordinates row and column
+information with counts. How does our naive counting compare to
+`summarizeOverlaps()`?
+
+```{r summarize-overlaps-solution}
+se1 <- summarizeOverlaps(hnrnpc, fls, singleEnd=FALSE, ignore.strand=TRUE)
+assay(se1)
+```
+
+Use `summarizeOverlaps()` to count reads overlapping each gene on chr14
+
+```{r summarize-overlaps-all}
+exByGn <- exonsBy(TxDb.Hsapiens.UCSC.hg19.knownGene, "gene")
+se2 <- summarizeOverlaps(exByGn, fls, singleEnd=FALSE, ignore.strand=TRUE)
+```
+
+Run the airway example, and produce a 'volcano plot' summarizing the
+relationship between -10 log(p) and log fold change
+
+```{r deseq-solution}
+library(DESeq2)
+library("airway")
+data(airway)
+airway <- airway[rowSums(assay(airway)) != 0, ]
+dds <- DESeqDataSet(airway, design = ~ cell + dex)
+dds <- DESeq(dds)
+res <- results(dds)
+plot(-10*log10(pvalue) ~ log2FoldChange, res)
+```
+
+# Conclusion
+
+Acknowledgements
+
+- Core (Seattle): **Sonali Arora**, Marc Carlson, Nate Hayden, Jim
+  Hester, Valerie Obenchain, Herv&eacute; Pag&egrave;s, Paul Shannon,
+  Dan Tenenbaum.
+
+- The research reported in this presentation was supported by the
+  National Cancer Institute and the National Human Genome Research
+  Institute of the National Institutes of Health under Award numbers
+  U24CA180996 and U41HG004059, and the National Science Foundation
+  under Award number 1247813. The content is solely the responsibility
+  of the authors and does not necessarily represent the official views
+  of the National Institutes of Health or the National Science
+  Foundation.
+
+[BioC 2015 Annual Conference](http://bioconductor.org/BioC2015/),
+Seattle, WA, 20-22 July.
+
+Key references
+
+- Irizarry R, et al. (2015) <a
+  href="http://genomicsclass.github.io/book/">Biomedical Data
+  Science</a>. Course Notes, EdX PH525.1x.
+- Huber W, et al. (2015) <a
+  href="http://www.nature.com/nmeth/journal/v12/n2/abs/nmeth.3252.html">Orchestrating
+  high-throughput genomic analysis with
+  <em>Bioconductor</em></a>. Nature Methods 12:115-121;
+  doi:10.1038/nmeth.3252 (full-text free with registration).
+- Lawrence M, Huber W, Pag&egraves;s H, Aboyoun P, Carlson M, et al. (2013) <a
+  href="http://dx.doi.org/10.1371/journal.pcbi.1003118">Software for
+  Computing and Annotating Genomic Ranges</a>. PLoS Comput Biol 9(8):
+  e1003118. doi: 10.1371/journal.pcbi.1003118
+
+```{r sessionInfo}
+sessionInfo()
+```
+
+[AnnotationHub]: http://bioconductor.org/packages/AnnotationHub
+[BSgenome.Hsapiens.UCSC.hg19]: http://bioconductor.org/packages/BSgenome.Hsapiens.UCSC.hg19
+[DESeq2]: http://bioconductor.org/packages/DESeq2
+[GenomicAlignments]: http://bioconductor.org/packages/GenomicAlignments
+[RNAseqData.HNRNPC.bam.chr14]: http://bioconductor.org/packages/RNAseqData.HNRNPC.bam.chr14
+[TxDb.Hsapiens.UCSC.hg19.knownGene]: http://bioconductor.org/packages/TxDb.Hsapiens.UCSC.hg19.knownGene
+[airway]: http://bioconductor.org/packages/airway
+[org.Hs.eg.db]: http://bioconductor.org/packages/org.Hs.eg.db

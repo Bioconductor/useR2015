@@ -2,7 +2,7 @@ Package: useR2015
 Type: Package
 Title: R / Bioconductor for analysis and comprehension of
     high-throughput genomic data
-Version: 0.0.2
+Version: 0.0.3
 Authors@R: c(
     person("Martin", "Morgan", role="cre",
         email="mtmorgan@fredhutch.org"),
