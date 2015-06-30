@@ -6,7 +6,8 @@ res <- results(dds)
 ymax <- 5
 
 ## this object will be used to locate points from click events.
-data <- with(res, cbind(baseMean, log2FoldChange))
+## the log10 is necessary for clicks to register near points
+data <- with(res, cbind(log10(baseMean), log2FoldChange))
 data[,2] <- pmin(ymax, pmax(-ymax, data[,2]))
 scale <- c(diff(range(data[,1])), 2*ymax)
 t.data.scaled <- t(data) / scale
@@ -18,6 +19,8 @@ shinyServer(function(input, output) {
     observe({
         xy = c(input$plotma_click$x, input$plotma_click$y)
         if (!is.null(xy)) {
+            # need to log10 transform incoming click 'x' coordinate
+            xy[1] <- log10(xy[1])
             ## find index of the closest point
             sqdists <- colMeans((t.data.scaled - xy/scale)^2)
             current$idx <- which.min(sqdists)
@@ -31,7 +34,8 @@ shinyServer(function(input, output) {
         ## add a circle around the selected point
         idx = current$idx
         if (!is.null(idx))
-            points(data[idx,1], data[idx,2], col="dodgerblue", cex=3, lwd=3)
+            # the first column of 'data' gives the exponent
+            points(10^data[idx,1], data[idx,2], col="dodgerblue", cex=3, lwd=3)
     })
     
     ## counts plot for the selected gene
