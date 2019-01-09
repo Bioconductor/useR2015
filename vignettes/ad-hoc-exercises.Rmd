@@ -159,7 +159,7 @@ Key references
   <em>Bioconductor</em></a>. Nature Methods 12:115-121;
   doi:10.1038/nmeth.3252 (full-text free with registration).
 - Lawrence M, Huber W, Pag&egraves;s H, Aboyoun P, Carlson M, et al. (2013) <a
-  href="http://dx.doi.org/10.1371/journal.pcbi.1003118">Software for
+  href="https://doi.org/10.1371/journal.pcbi.1003118">Software for
   Computing and Annotating Genomic Ranges</a>. PLoS Comput Biol 9(8):
   e1003118. doi: 10.1371/journal.pcbi.1003118
 
